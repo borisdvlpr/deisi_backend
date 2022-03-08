@@ -25,14 +25,53 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
-                        <span>Menu</span><span class="caret"></span>
+                        <span>Utilizadores</span><span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
+                        <li>
+                            <a th:href="@{/users/new}">Novo utilizador</a>
+                        </li>
                         <li>
                             <a th:href="@{/users/list}">Listar utilizadores</a>
                         </li>
                         <li>
-                            <a th:href="@{/users/new}">Novo utilizador</a>
+                            <a th:href="@{/users-api/list}" target="_blank"> API utilizadores</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <span>Alunos</span><span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a th:href="@{/students/new}">Novo aluno</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/students/list}">Listar alunos</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/students-api/list}" target="_blank">API alunos</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <span>Professores</span><span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a th:href="@{/teachers/new}">Novo professor</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/teachers/list}">Listar professores</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/teachers-api/list}" target="_blank">API professores</a>
                         </li>
                     </ul>
                 </li>
@@ -53,7 +92,7 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="glyphicon glyphicon-user"></span> <span th:text="${username}"></span><span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head (pageTitle='Listagem de professores')">
+</head>
+<body>
+<div th:replace="layout/layout :: header"></div>
+
+<div class="container">
+    <div class="alert alert-info" th:if="${message}" th:text="${message}">
+        Message...
+    </div>
+    <div class="alert alert-error" th:if="${error}" th:text="${error}">
+        Message...
+    </div>
+    <h1>Listagem de professores</h1>
+    <form th:action="@{/teachers/list}" method="get">
+        <label>Apenas professores com idade:</label>
+        <input type="text" name="age" th:value="${age}" />
+        <input type="submit" value="filtrar">
+    </form>
+    <table class="table" th:if="${!teachers.isEmpty()}">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Idade</th>
+                <th>Operações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="teacher : ${teachers}">
+                <td th:text="${teacher.name}"></td>
+                <td th:text="${teacher.age}"></td>
+                <td>
+                    <a th:href="@{'/teachers/edit/' + ${teacher.id}}">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:replace="layout/layout :: footer"></div>
+</body>
+</html>

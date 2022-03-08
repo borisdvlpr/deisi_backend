@@ -5,8 +5,8 @@ import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.NotNull
 
 
-data class UserForm (
-        var userId: String? = null,
+data class TeacherForm (
+        var teacherId: String? = null,
 
         @field:NotEmpty(message = "Erro: O nome tem que estar preenchido")
         var name: String? = null,
