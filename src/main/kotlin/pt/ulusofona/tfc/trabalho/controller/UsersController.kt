@@ -37,7 +37,6 @@ class UsersController(val userRepository: UserRepository) {
 
     @GetMapping(value = ["/edit/{id}"])
     fun showUserForm(@PathVariable("id") id: Long, model: ModelMap): String {
-
         val userOptional = userRepository.findById(id)
         if (userOptional.isPresent) {
             val user = userOptional.get()
@@ -45,6 +44,17 @@ class UsersController(val userRepository: UserRepository) {
         }
 
         return "new-user-form"
+    }
+
+    @GetMapping(value = ["/delete/{id}"])
+    fun showUserDelete(@PathVariable("id") id: Long, model: ModelMap): String {
+        val userOptional = userRepository.findById(id)
+        if (userOptional.isPresent) {
+            val user = userOptional.get()
+            model["userForm"] = UserForm(userId = user.id.toString(), name = user.name, age = user.age)
+        }
+
+        return "delete-user-form"
     }
 
     @PostMapping(value = ["/new"])
@@ -73,6 +83,31 @@ class UsersController(val userRepository: UserRepository) {
         } else {
             redirectAttributes.addFlashAttribute("message", "Utilizador editado com sucesso")
         }
+        return "redirect:/users/list"
+    }
+
+    @PostMapping(value = ["/delete"])
+    fun deleteUser(@Valid @ModelAttribute("userForm") userForm: UserForm,
+                           bindingResult: BindingResult,
+                           redirectAttributes: RedirectAttributes) : String {
+
+        if (bindingResult.hasErrors()) {
+            return "delete-user-form"
+        }
+
+        val user: User =
+            if (userForm.userId.isNullOrBlank()) {
+                User(name = userForm.name!!, age = userForm.age!!)
+            } else {
+                val u = userRepository.findById(userForm.userId!!.toLong()).get()
+                u.name = userForm.name!!
+                u.age = userForm.age!!
+                u
+            }
+
+        userRepository.delete(user)
+        redirectAttributes.addFlashAttribute("message", "Utilizador eliminado com sucesso")
+
         return "redirect:/users/list"
     }
 }

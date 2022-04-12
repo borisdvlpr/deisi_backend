@@ -37,7 +37,6 @@ class StudentController(val studentRepository: StudentRepository) {
 
     @GetMapping(value = ["/edit/{id}"])
     fun showStudentForm(@PathVariable("id") id: Long, model: ModelMap): String {
-
         val studentOptional = studentRepository.findById(id)
         if (studentOptional.isPresent) {
             val student = studentOptional.get()
@@ -45,6 +44,17 @@ class StudentController(val studentRepository: StudentRepository) {
         }
 
         return "new-student-form"
+    }
+
+    @GetMapping(value = ["/delete/{id}"])
+    fun showStudentDelete(@PathVariable("id") id: Long, model: ModelMap): String {
+        val studentOptional = studentRepository.findById(id)
+        if (studentOptional.isPresent) {
+            val student = studentOptional.get()
+            model["studentForm"] = StudentForm(studentId = student.id.toString(), name = student.name, age = student.age)
+        }
+
+        return "delete-student-form"
     }
 
     @PostMapping(value = ["/new"])
@@ -74,6 +84,31 @@ class StudentController(val studentRepository: StudentRepository) {
         } else {
             redirectAttributes.addFlashAttribute("message", "Aluno editado com sucesso")
         }
+        return "redirect:/students/list"
+    }
+
+    @PostMapping(value = ["/delete"])
+    fun deleteStudent(@Valid @ModelAttribute("studentForm") studentForm: StudentForm,
+                           bindingResult: BindingResult,
+                           redirectAttributes: RedirectAttributes) : String {
+
+        if (bindingResult.hasErrors()) {
+            return "delete-student-form"
+        }
+
+        val student: Student =
+            if (studentForm.studentId.isNullOrBlank()) {
+                Student(name = studentForm.name!!, age = studentForm.age!!)
+            } else {
+                val s = studentRepository.findById(studentForm.studentId!!.toLong()).get()
+                s.name = studentForm.name!!
+                s.age = studentForm.age!!
+                s
+            }
+
+        studentRepository.delete(student)
+        redirectAttributes.addFlashAttribute("message", "Aluno eliminado com sucesso")
+
         return "redirect:/students/list"
     }
 }

@@ -37,18 +37,28 @@ class TeacherController(val teacherRepository: TeacherRepository) {
 
     @GetMapping(value = ["/edit/{id}"])
     fun showTeacherForm(@PathVariable("id") id: Long, model: ModelMap): String {
-
         val teacherOptional = teacherRepository.findById(id)
         if (teacherOptional.isPresent) {
             val teacher = teacherOptional.get()
-            model["studentForm"] = TeacherForm(teacherId = teacher.id.toString(), name = teacher.name, age = teacher.age)
+            model["teacherForm"] = TeacherForm(teacherId = teacher.id.toString(), name = teacher.name, age = teacher.age)
         }
 
         return "new-teacher-form"
     }
 
+    @GetMapping(value = ["/delete/{id}"])
+    fun showTeacherDelete(@PathVariable("id") id: Long, model: ModelMap): String {
+        val teacherOptional = teacherRepository.findById(id)
+        if (teacherOptional.isPresent) {
+            val teacher = teacherOptional.get()
+            model["teacherForm"] = TeacherForm(teacherId = teacher.id.toString(), name = teacher.name, age = teacher.age)
+        }
+
+        return "delete-teacher-form"
+    }
+
     @PostMapping(value = ["/new"])
-    fun createOrUpdateTeacher(@Valid @ModelAttribute("studentForm") teacherForm: TeacherForm,
+    fun createOrUpdateTeacher(@Valid @ModelAttribute("teacherForm") teacherForm: TeacherForm,
                               bindingResult: BindingResult,
                               redirectAttributes: RedirectAttributes
     ) : String {
@@ -57,23 +67,48 @@ class TeacherController(val teacherRepository: TeacherRepository) {
             return "new-teacher-form"
         }
 
-        val student: Teacher =
-            if (teacherForm.teacherId.isNullOrBlank()) {  // new teacher
+        val teacher: Teacher =
+            if (teacherForm.teacherId.isNullOrBlank()) {
                 Teacher(name = teacherForm.name!!, age = teacherForm.age!!)
-            } else { // edit student
+            } else {
                 val t = teacherRepository.findById(teacherForm.teacherId!!.toLong()).get()
                 t.name = teacherForm.name!!
                 t.age = teacherForm.age!!
                 t
             }
 
-        teacherRepository.save(student)
+        teacherRepository.save(teacher)
 
         if (teacherForm.teacherId == null) {
             redirectAttributes.addFlashAttribute("message", "Professor inserido com sucesso")
         } else {
             redirectAttributes.addFlashAttribute("message", "Professor editado com sucesso")
         }
+        return "redirect:/teachers/list"
+    }
+
+    @PostMapping(value = ["/delete"])
+    fun deleteTeacher(@Valid @ModelAttribute("teacherForm") teacherForm: TeacherForm,
+                          bindingResult: BindingResult,
+                          redirectAttributes: RedirectAttributes) : String {
+
+        if (bindingResult.hasErrors()) {
+            return "delete-teacher-form"
+        }
+
+        val teacher: Teacher =
+            if (teacherForm.teacherId.isNullOrBlank()) {
+                Teacher(name = teacherForm.name!!, age = teacherForm.age!!)
+            } else {
+                val t = teacherRepository.findById(teacherForm.teacherId!!.toLong()).get()
+                t.name = teacherForm.name!!
+                t.age = teacherForm.age!!
+                t
+            }
+
+        teacherRepository.delete(teacher)
+        redirectAttributes.addFlashAttribute("message", "Professor eliminado com sucesso")
+
         return "redirect:/teachers/list"
     }
 }

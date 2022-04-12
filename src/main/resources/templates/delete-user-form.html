@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head (pageTitle='Eliminar utilizador')">
+</head>
+<body>
+<div th:replace="layout/layout :: header"></div>
+
+<div class="container">
+    <h1 class="page-header" th:if="${userForm.userId != null}">Eliminar utilizador</h1>
+
+    <form th:object="${userForm}" method="post" th:action="@{/users/delete}" class="form-horizontal">
+        <div class="form-group" th:classappend="${#fields.hasErrors('name')} ? 'has-error' : ''">
+            <label for="name" class="col-sm-3 control-label">Nome</label>
+            <div class="col-sm-9">
+                <input th:field="*{name}" type="text" class="form-control" id="name" maxlength="100" readonly="readonly"/>
+                <p class="help-block" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</p>
+                <p class="help-block" th:if="${!#fields.hasErrors('name')}">Nome do utilizador</p>
+            </div>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('age')} ? 'has-error' : ''">
+            <label for="age" class="col-sm-3 control-label">Idade</label>
+            <div class="col-sm-9">
+                <input th:field="*{age}" type="text" class="form-control" id="age" maxlength="3" readonly="readonly"/>
+                <p class="help-block" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Error</p>
+                <p class="help-block" th:if="${!#fields.hasErrors('age')}">Idade do utilizador</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3">
+                &nbsp;
+            </div>
+            <div class="col-sm-9">
+                <input name="userId" type="hidden" th:value="*{userId}" />
+                <input type="submit" value="Eliminar" class="btn btn-danger" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<div th:replace="layout/layout :: footer"></div>
+</body>
+</html>
