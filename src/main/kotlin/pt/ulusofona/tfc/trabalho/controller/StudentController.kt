@@ -40,7 +40,7 @@ class StudentController(val studentRepository: StudentRepository) {
         val studentOptional = studentRepository.findById(id)
         if (studentOptional.isPresent) {
             val student = studentOptional.get()
-            model["studentForm"] = StudentForm(studentId = student.id.toString(), name = student.name, age = student.age)
+            model["studentForm"] = StudentForm(studentId = student.id.toString(), name = student.name, age = student.age, imgSrc = student.imgSrc, description = student.description)
         }
 
         return "new-student-form"
@@ -51,7 +51,7 @@ class StudentController(val studentRepository: StudentRepository) {
         val studentOptional = studentRepository.findById(id)
         if (studentOptional.isPresent) {
             val student = studentOptional.get()
-            model["studentForm"] = StudentForm(studentId = student.id.toString(), name = student.name, age = student.age)
+            model["studentForm"] = StudentForm(studentId = student.id.toString(), name = student.name, age = student.age, imgSrc = student.imgSrc, description = student.description)
         }
 
         return "delete-student-form"
@@ -68,12 +68,14 @@ class StudentController(val studentRepository: StudentRepository) {
         }
 
         val student: Student =
-            if (studentForm.studentId.isNullOrBlank()) {  // new student
-                Student(name = studentForm.name!!, age = studentForm.age!!)
-            } else { // edit student
+            if (studentForm.studentId.isNullOrBlank()) {
+                Student(name = studentForm.name!!, age = studentForm.age!!, imgSrc = studentForm.imgSrc!!, description = studentForm.description!!)
+            } else {
                 val s = studentRepository.findById(studentForm.studentId!!.toLong()).get()
                 s.name = studentForm.name!!
                 s.age = studentForm.age!!
+                s.imgSrc = studentForm.imgSrc!!
+                s.description = studentForm.description!!
                 s
             }
 
@@ -98,11 +100,13 @@ class StudentController(val studentRepository: StudentRepository) {
 
         val student: Student =
             if (studentForm.studentId.isNullOrBlank()) {
-                Student(name = studentForm.name!!, age = studentForm.age!!)
+                Student(name = studentForm.name!!, age = studentForm.age!!, imgSrc = studentForm.imgSrc!!, description = studentForm.description!!)
             } else {
                 val s = studentRepository.findById(studentForm.studentId!!.toLong()).get()
                 s.name = studentForm.name!!
                 s.age = studentForm.age!!
+                s.imgSrc = studentForm.imgSrc!!
+                s.description = studentForm.description!!
                 s
             }
 

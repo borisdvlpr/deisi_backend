@@ -40,7 +40,7 @@ class TeacherController(val teacherRepository: TeacherRepository) {
         val teacherOptional = teacherRepository.findById(id)
         if (teacherOptional.isPresent) {
             val teacher = teacherOptional.get()
-            model["teacherForm"] = TeacherForm(teacherId = teacher.id.toString(), name = teacher.name, age = teacher.age)
+            model["teacherForm"] = TeacherForm(teacherId = teacher.id.toString(), name = teacher.name, age = teacher.age, imgSrc = teacher.imgSrc, description = teacher.description)
         }
 
         return "new-teacher-form"
@@ -51,7 +51,7 @@ class TeacherController(val teacherRepository: TeacherRepository) {
         val teacherOptional = teacherRepository.findById(id)
         if (teacherOptional.isPresent) {
             val teacher = teacherOptional.get()
-            model["teacherForm"] = TeacherForm(teacherId = teacher.id.toString(), name = teacher.name, age = teacher.age)
+            model["teacherForm"] = TeacherForm(teacherId = teacher.id.toString(), name = teacher.name, age = teacher.age, imgSrc = teacher.imgSrc, description = teacher.description)
         }
 
         return "delete-teacher-form"
@@ -59,8 +59,8 @@ class TeacherController(val teacherRepository: TeacherRepository) {
 
     @PostMapping(value = ["/new"])
     fun createOrUpdateTeacher(@Valid @ModelAttribute("teacherForm") teacherForm: TeacherForm,
-                              bindingResult: BindingResult,
-                              redirectAttributes: RedirectAttributes
+                          bindingResult: BindingResult,
+                          redirectAttributes: RedirectAttributes
     ) : String {
 
         if (bindingResult.hasErrors()) {
@@ -69,11 +69,13 @@ class TeacherController(val teacherRepository: TeacherRepository) {
 
         val teacher: Teacher =
             if (teacherForm.teacherId.isNullOrBlank()) {
-                Teacher(name = teacherForm.name!!, age = teacherForm.age!!)
+                Teacher(name = teacherForm.name!!, age = teacherForm.age!!, imgSrc = teacherForm.imgSrc!!, description = teacherForm.description!!)
             } else {
                 val t = teacherRepository.findById(teacherForm.teacherId!!.toLong()).get()
                 t.name = teacherForm.name!!
                 t.age = teacherForm.age!!
+                t.imgSrc = teacherForm.imgSrc!!
+                t.description = teacherForm.description!!
                 t
             }
 
@@ -98,11 +100,13 @@ class TeacherController(val teacherRepository: TeacherRepository) {
 
         val teacher: Teacher =
             if (teacherForm.teacherId.isNullOrBlank()) {
-                Teacher(name = teacherForm.name!!, age = teacherForm.age!!)
+                Teacher(name = teacherForm.name!!, age = teacherForm.age!!, imgSrc = teacherForm.imgSrc!!, description = teacherForm.description!!)
             } else {
                 val t = teacherRepository.findById(teacherForm.teacherId!!.toLong()).get()
                 t.name = teacherForm.name!!
                 t.age = teacherForm.age!!
+                t.imgSrc = teacherForm.imgSrc!!
+                t.description = teacherForm.description!!
                 t
             }
 

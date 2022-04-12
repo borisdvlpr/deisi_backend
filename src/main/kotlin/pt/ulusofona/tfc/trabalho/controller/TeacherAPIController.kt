@@ -28,7 +28,7 @@ class TeacherAPIController(val teacherRepository: TeacherRepository) {
 
     @PostMapping(value = ["/new"])
     fun createOrUpdateTeachers(@Valid @RequestBody teacherForm: TeacherForm,
-                              bindingResult: BindingResult) : ResponseEntity<TeacherForm> {
+                          bindingResult: BindingResult) : ResponseEntity<TeacherForm> {
 
         if (bindingResult.hasErrors()) {
             return ResponseEntity(teacherForm, HttpStatus.FORBIDDEN)
@@ -36,11 +36,13 @@ class TeacherAPIController(val teacherRepository: TeacherRepository) {
 
         val student: Teacher =
             if (teacherForm.teacherId.isNullOrBlank()) {  // new teacher
-                Teacher(name = teacherForm.name!!, age = teacherForm.age!!)
+                Teacher(name = teacherForm.name!!, age = teacherForm.age!!, imgSrc = teacherForm.imgSrc!!, description = teacherForm.description!!)
             } else { // edit teacher
                 val t = teacherRepository.findById(teacherForm.teacherId!!.toLong()).get()
                 t.name = teacherForm.name!!
                 t.age = teacherForm.age!!
+                t.imgSrc = teacherForm.imgSrc!!
+                t.description = teacherForm.description!!
                 t
             }
 

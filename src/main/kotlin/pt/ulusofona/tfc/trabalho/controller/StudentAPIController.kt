@@ -19,7 +19,7 @@ class StudentAPIController(val studentRepository: StudentRepository) {
     @GetMapping(value = ["/list"])
     fun listStudents(@RequestParam("age") age: Int?): List<Student> {
         val students = if (age == null) {
-            studentRepository.findAll()  // get all students from DB
+            studentRepository.findAll()
         } else {
             studentRepository.findByAge(age)
         }
@@ -36,11 +36,13 @@ class StudentAPIController(val studentRepository: StudentRepository) {
 
         val student: Student =
             if (studentForm.studentId.isNullOrBlank()) {  // new student
-                Student(name = studentForm.name!!, age = studentForm.age!!)
+                Student(name = studentForm.name!!, age = studentForm.age!!, imgSrc = studentForm.imgSrc!!, description = studentForm.description!!)
             } else { // edit student
                 val s = studentRepository.findById(studentForm.studentId!!.toLong()).get()
                 s.name = studentForm.name!!
                 s.age = studentForm.age!!
+                s.imgSrc = studentForm.imgSrc!!
+                s.description = studentForm.description!!
                 s
             }
 
