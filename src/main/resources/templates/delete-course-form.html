@@ -25,52 +25,20 @@
                 <p class="help-block" th:if="${!#fields.hasErrors('degree')}">Grau do curso</p>
             </div>
         </div>
-        <div class="form-group" th:classappend="${#fields.hasErrors('studentDegree')} ? 'has-error' : ''">
-            <label for="studentDegree" class="col-sm-3 control-label">Grau (aluno)</label>
-            <div class="col-sm-9">
-                <input th:field="*{studentDegree}" type="text" class="form-control" id="studentDegree" readonly="readonly"/>
-                <p class="help-block" th:if="${#fields.hasErrors('studentDegree')}" th:errors="*{studentDegree}">Error</p>
-                <p class="help-block" th:if="${!#fields.hasErrors('studentDegree')}">Grau do aluno</p>
-            </div>
-        </div>
-        <div class="form-group" th:classappend="${#fields.hasErrors('time')} ? 'has-error' : ''">
-            <label for="time" class="col-sm-3 control-label">Tempo</label>
-            <div class="col-sm-9">
-                <input th:field="*{time}" type="text" class="form-control" id="time" readonly="readonly"/>
-                <p class="help-block" th:if="${#fields.hasErrors('time')}" th:errors="*{time}">Error</p>
-                <p class="help-block" th:if="${!#fields.hasErrors('time')}">Tempo do curso</p>
-            </div>
-        </div>
-        <div class="form-group" th:classappend="${#fields.hasErrors('ects')} ? 'has-error' : ''">
-            <label for="ects" class="col-sm-3 control-label">ECTS</label>
-            <div class="col-sm-9">
-                <input th:field="*{ects}" type="text" class="form-control" id="ects" readonly="readonly"/>
-                <p class="help-block" th:if="${#fields.hasErrors('ects')}" th:errors="*{ects}">ECTS</p>
-                <p class="help-block" th:if="${!#fields.hasErrors('ects')}">Número ECTS</p>
-            </div>
-        </div>
-        <div class="form-group" th:classappend="${#fields.hasErrors('directorName')} ? 'has-error' : ''">
-            <label for="directorName" class="col-sm-3 control-label">Mome Diretor</label>
-            <div class="col-sm-9">
-                <input th:field="*{directorName}" type="text" class="form-control" id="directorName" readonly="readonly"/>
-                <p class="help-block" th:if="${#fields.hasErrors('directorName')}" th:errors="*{directorName}">Error</p>
-                <p class="help-block" th:if="${!#fields.hasErrors('directorName')}">Nome do diretor</p>
-            </div>
-        </div>
-        <div class="form-group" th:classappend="${#fields.hasErrors('directorContact')} ? 'has-error' : ''">
-            <label for="directorContact" class="col-sm-3 control-label">Contacto Diretor</label>
-            <div class="col-sm-9">
-                <input th:field="*{directorContact}" type="text" class="form-control" id="directorContact" readonly="readonly"/>
-                <p class="help-block" th:if="${#fields.hasErrors('directorContact')}" th:errors="*{directorContact}">Error</p>
-                <p class="help-block" th:if="${!#fields.hasErrors('directorContact')}">Email do diretor</p>
-            </div>
-        </div>
         <div class="form-group" th:classappend="${#fields.hasErrors('url')} ? 'has-error' : ''">
             <label for="url" class="col-sm-3 control-label">URL</label>
             <div class="col-sm-9">
                 <input th:field="*{url}" type="text" class="form-control" id="url" readonly="readonly"/>
                 <p class="help-block" th:if="${#fields.hasErrors('url')}" th:errors="*{url}">Error</p>
-                <p class="help-block" th:if="${!#fields.hasErrors('url')}">URL do curso</p>
+                <p class="help-block" th:if="${!#fields.hasErrors('url')}">Link do curso</p>
+            </div>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('courseDescription')} ? 'has-error' : ''">
+            <label for="courseDescription" class="col-sm-3 control-label">Descrição</label>
+            <div class="col-sm-9">
+                <textarea th:field="*{courseDescription}" class="form-control" id="courseDescription" rows="6" maxlength="500" readonly="readonly" style="resize: none;"></textarea>
+                <p class="help-block" th:if="${#fields.hasErrors('courseDescription')}" th:errors="*{courseDescription}">Error</p>
+                <p class="help-block" th:if="${!#fields.hasErrors('courseDescription')}">Descrição do curso</p>
             </div>
         </div>
         <div class="form-group">
@@ -81,15 +49,9 @@
                 <input name="courseId" type="hidden" th:value="*{courseId}" />
                 <input type="submit" value="Eliminar" class="btn btn-danger" />
             </div>
-            <div class="row-sm-9">
-                &nbsp;
-            </div>
-            <div class="row-sm-9">
-                &nbsp;
-            </div>
-            <div class="row-sm-9">
-                &nbsp;
-            </div>
+            <div class="row-sm-9">&nbsp;</div>
+            <div class="row-sm-9">&nbsp;</div>
+            <div class="row-sm-9">&nbsp;</div>
         </div>
     </form>
 </div>

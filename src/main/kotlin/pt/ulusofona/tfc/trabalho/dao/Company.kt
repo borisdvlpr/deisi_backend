@@ -5,8 +5,9 @@ import javax.persistence.GeneratedValue
 import javax.persistence.Id
 
 @Entity
-data class User(
+data class Company (
         @Id @GeneratedValue
         val id: Long = 0,
         var name: String,
-        var age: Int)
+        var imgSrc: String,
+        var description: String)

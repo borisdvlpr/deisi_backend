@@ -1,5 +1,6 @@
 package pt.ulusofona.tfc.trabalho.dao
 
+import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
@@ -10,9 +11,6 @@ data class Course (
         val id: Long = 0,
         var title: String,
         var degree: String,
-        var studentDegree: String,
-        var time: String,
-        var ects: Int,
-        var directorName: String,
-        var directorContact: String,
-        var url: String)
+        var url: String,
+        @Column(length = 1000)
+        var courseDescription: String)

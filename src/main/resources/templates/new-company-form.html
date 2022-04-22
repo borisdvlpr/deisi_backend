@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head (pageTitle='Nova empresa')">
+</head>
+<body>
+<div th:replace="layout/layout :: header"></div>
+
+<div class="container">
+    <h1 class="page-header" th:if="${companyForm.companyId == null}">Criar empresa</h1>
+    <h1 class="page-header" th:if="${companyForm.companyId != null}">Editar empresa</h1>
+
+    <form th:object="${companyForm}" method="post" th:action="@{/companies/new}" class="form-horizontal">
+        <div class="form-group" th:classappend="${#fields.hasErrors('name')} ? 'has-error' : ''">
+            <label for="name" class="col-sm-3 control-label">Nome</label>
+            <div class="col-sm-9">
+                <input th:field="*{name}" type="text" class="form-control" id="name" maxlength="100"/>
+                <p class="help-block" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</p>
+                <p class="help-block" th:if="${!#fields.hasErrors('name')}">Nome da empresa</p>
+            </div>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('imgSrc')} ? 'has-error' : ''">
+            <label for="imgSrc" class="col-sm-3 control-label">Link Imagem</label>
+            <div class="col-sm-9">
+                <input th:field="*{imgSrc}" type="text" class="form-control" id="imgSrc" maxlength="150"/>
+                <p class="help-block" th:if="${#fields.hasErrors('imgSrc')}" th:errors="*{imgSrc}">Error</p>
+                <p class="help-block" th:if="${!#fields.hasErrors('imgSrc')}">Imagem da empresa</p>
+            </div>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('description')} ? 'has-error' : ''">
+            <label for="description" class="col-sm-3 control-label">Descrição</label>
+            <div class="col-sm-9">
+                <input th:field="*{description}" type="text" class="form-control" id="description" maxlength="200"/>
+                <p class="help-block" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Error</p>
+                <p class="help-block" th:if="${!#fields.hasErrors('description')}">Descrição da empresa</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3">
+                &nbsp;
+            </div>
+            <div class="col-sm-9">
+                <input name="companyId" type="hidden" th:value="*{companyId}" />
+                <input type="submit" value="Gravar" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<div th:replace="layout/layout :: footer"></div>
+</body>
+</html>

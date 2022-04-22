@@ -36,17 +36,13 @@ class CourseAPIController(val courseRepository: CourseRepository) {
 
         val course: Course =
             if (courseForm.courseId.isNullOrBlank()) {
-                Course(title = courseForm.title!!, degree = courseForm.degree!!, studentDegree = courseForm.studentDegree!!, time = courseForm.time!!, ects = courseForm.ects!!, directorName = courseForm.directorName!!, directorContact = courseForm.directorContact!!, url = courseForm.url!!)
+                Course(title = courseForm.title!!, degree = courseForm.degree!!, url = courseForm.url!!, courseDescription = courseForm.courseDescription!!)
             } else {
                 val c = courseRepository.findById(courseForm.courseId!!.toLong()).get()
                 c.title = courseForm.title!!
                 c.degree = courseForm.degree!!
-                c.studentDegree = courseForm.studentDegree!!
-                c.time = courseForm.time!!
-                c.ects = courseForm.ects!!
-                c.directorName = courseForm.directorName!!
-                c.directorContact = courseForm.directorContact!!
                 c.url = courseForm.url!!
+                c.courseDescription = courseForm.courseDescription!!
                 c
             }
 

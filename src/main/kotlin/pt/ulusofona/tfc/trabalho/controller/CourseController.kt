@@ -40,7 +40,7 @@ class CourseController(val courseRepository: CourseRepository) {
         val courseOptional = courseRepository.findById(id)
         if (courseOptional.isPresent) {
             val course = courseOptional.get()
-            model["courseForm"] = CourseForm(courseId = course.id.toString(), title = course.title, degree = course.degree, studentDegree = course.studentDegree, time = course.time, ects = course.ects, directorName = course.directorName, directorContact = course.directorContact, url = course.url)
+            model["courseForm"] = CourseForm(courseId = course.id.toString(), title = course.title, degree = course.degree, url = course.url, courseDescription = course.courseDescription)
         }
 
         return "new-course-form"
@@ -51,7 +51,7 @@ class CourseController(val courseRepository: CourseRepository) {
         val courseOptional = courseRepository.findById(id)
         if (courseOptional.isPresent) {
             val course = courseOptional.get()
-            model["courseForm"] = CourseForm(courseId = course.id.toString(), title = course.title, degree = course.degree, studentDegree = course.studentDegree, time = course.time, ects = course.ects, directorName = course.directorName, directorContact = course.directorContact, url = course.url)
+            model["courseForm"] = CourseForm(courseId = course.id.toString(), title = course.title, degree = course.degree, url = course.url, courseDescription = course.courseDescription)
         }
 
         return "delete-course-form"
@@ -69,17 +69,13 @@ class CourseController(val courseRepository: CourseRepository) {
 
         val course: Course =
             if (courseForm.courseId.isNullOrBlank()) {
-                Course(title = courseForm.title!!, degree = courseForm.degree!!, studentDegree = courseForm.studentDegree!!, time = courseForm.time!!, ects = courseForm.ects!!, directorName = courseForm.directorName!!, directorContact = courseForm.directorContact!!, url = courseForm.url!!)
+                Course(title = courseForm.title!!, degree = courseForm.degree!!, url = courseForm.url!!, courseDescription = courseForm.courseDescription!!)
             } else {
                 val c = courseRepository.findById(courseForm.courseId!!.toLong()).get()
                 c.title = courseForm.title!!
                 c.degree = courseForm.degree!!
-                c.studentDegree = courseForm.studentDegree!!
-                c.time = courseForm.time!!
-                c.ects = courseForm.ects!!
-                c.directorName = courseForm.directorName!!
-                c.directorContact = courseForm.directorContact!!
                 c.url = courseForm.url!!
+                c.courseDescription = courseForm.courseDescription!!
                 c
             }
 
@@ -104,17 +100,13 @@ class CourseController(val courseRepository: CourseRepository) {
 
         val course: Course =
             if (courseForm.courseId.isNullOrBlank()) {
-                Course(title = courseForm.title!!, degree = courseForm.degree!!, studentDegree = courseForm.studentDegree!!, time = courseForm.time!!, ects = courseForm.ects!!, directorName = courseForm.directorName!!, directorContact = courseForm.directorContact!!, url = courseForm.url!!)
+                Course(title = courseForm.title!!, degree = courseForm.degree!!, url = courseForm.url!!, courseDescription = courseForm.courseDescription!!)
             } else {
                 val c = courseRepository.findById(courseForm.courseId!!.toLong()).get()
                 c.title = courseForm.title!!
                 c.degree = courseForm.degree!!
-                c.studentDegree = courseForm.studentDegree!!
-                c.time = courseForm.time!!
-                c.ects = courseForm.ects!!
-                c.directorName = courseForm.directorName!!
-                c.directorContact = courseForm.directorContact!!
                 c.url = courseForm.url!!
+                c.courseDescription = courseForm.courseDescription!!
                 c
             }
 

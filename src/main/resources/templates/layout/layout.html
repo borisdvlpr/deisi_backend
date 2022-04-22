@@ -25,21 +25,20 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
-                        <span>Utilizadores</span><span class="caret"></span>
+                        <span>Páginas</span><span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a th:href="@{/users/new}">Novo utilizador</a>
+                            <a th:href="@{/pages/new}">Nova página</a>
                         </li>
                         <li>
-                            <a th:href="@{/users/list}">Listar utilizadores</a>
+                            <a th:href="@{/pages/list}">Listar páginas</a>
                         </li>
                         <li>
-                            <a th:href="@{/users-api/list}" target="_blank"> API utilizadores</a>
+                            <a th:href="@{/pages-api/list}" target="_blank">API páginas</a>
                         </li>
                     </ul>
                 </li>
-
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
@@ -93,21 +92,24 @@
                         </li>
                     </ul>
                 </li>
-            </ul>
-            <ul class="nav navbar-nav">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown5" role="button" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
-                        <span>Other menu</span><span class="caret"></span>
+                        <span>Empresas</span><span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a th:href="@{/other}">Other item</a>
+                            <a th:href="@{/companies/new}">Nova empresa</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/companies/list}">Listar empresas</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/companies-api/list}" target="_blank">API empresas</a>
                         </li>
                     </ul>
                 </li>
             </ul>
-
             <ul class="nav navbar-nav navbar-right">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAdmin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
