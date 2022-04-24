@@ -37,7 +37,7 @@
         <div class="form-group" th:classappend="${#fields.hasErrors('description')} ? 'has-error' : ''">
             <label for="description" class="col-sm-3 control-label">Descrição</label>
             <div class="col-sm-9">
-                <input th:field="*{description}" type="text" class="form-control" id="description" maxlength="200"/>
+                <input th:field="*{description}" type="text" class="form-control" id="description" maxlength="260"/>
                 <p class="help-block" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Error</p>
                 <p class="help-block" th:if="${!#fields.hasErrors('description')}">Descrição do aluno</p>
             </div>

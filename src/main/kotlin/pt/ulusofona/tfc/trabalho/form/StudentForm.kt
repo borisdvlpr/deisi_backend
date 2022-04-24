@@ -20,6 +20,6 @@ data class StudentForm (
         var imgSrc: String? = null,
 
         @field:NotEmpty(message = "Erro: a descrição tem que ser preenchida")
-        @field:Length(min=9, max=200, message = "Erro: descrição longa (max. 200 caracteres)")
+        @field:Length(min=9, max=260, message = "Erro: descrição longa (max. 200 caracteres)")
         var description: String? = null
 )

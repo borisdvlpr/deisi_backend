@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/layout :: head (pageTitle='Eliminar aluno')">
+<head th:replace="layout/layout :: head (pageTitle='Eliminar empresa')">
 </head>
 <body>
 <div th:replace="layout/layout :: header"></div>
@@ -8,7 +8,7 @@
 <div class="container">
     <h1 class="page-header" th:if="${companyForm.companyId != null}">Eliminar empresa</h1>
 
-    <form th:object="${companyForm}" method="post" th:action="@{/companies/new}" class="form-horizontal">
+    <form th:object="${companyForm}" method="post" th:action="@{/companies/delete}" class="form-horizontal">
         <div class="form-group" th:classappend="${#fields.hasErrors('name')} ? 'has-error' : ''">
             <label for="name" class="col-sm-3 control-label">Nome</label>
             <div class="col-sm-9">
@@ -39,7 +39,7 @@
             </div>
             <div class="col-sm-9">
                 <input name="companyId" type="hidden" th:value="*{companyId}" />
-                <input type="submit" value="Gravar" class="btn btn-primary" />
+                <input type="submit" value="Eliminar" class="btn btn-danger" />
             </div>
         </div>
     </form>
