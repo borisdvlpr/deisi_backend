@@ -7,7 +7,6 @@
 - JDK 11 ou superior instalado. [Download](https://nodejs.org/en/download/) da versão atual.
 - MySQL 8 ou superior instalado. [Download](https://nodejs.org/en/download/) da versão atual.
 - IntelliJ Ultimate([Download](https://nodejs.org/en/download/)) ou IntelliJ Community([Download](https://nodejs.org/en/download/)) + SGBD (p.e DBeaver - [Download](https://nodejs.org/en/download/)).
-- Git. [Download](https://git-scm.com/) da versão atual.
 
 ### Instalação
 
