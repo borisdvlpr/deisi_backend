@@ -6,11 +6,12 @@ import javax.persistence.GeneratedValue
 import javax.persistence.Id
 
 @Entity
-data class Student (
+data class Page (
         @Id @GeneratedValue
         val id: Long = 0,
-        var name: String,
-        var gradYear: Int,
-        var imgSrc: String,
-        @Column(length = 300)
-        var description: String)
+        var pageName: String,
+        var title: String,
+        var stat: String,
+        var statText: String,
+        @Column(length = 510)
+        var pageText: String)

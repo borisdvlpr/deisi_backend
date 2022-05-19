@@ -12,9 +12,9 @@ data class StudentForm (
         @field:NotEmpty(message = "Erro: O nome tem que estar preenchido")
         var name: String? = null,
 
-        @field:NotNull(message = "Erro: A idade tem que estar preenchida")
-        @field:Min(value=18, message = "Erro: A idade tem que ser >= 18")
-        var age: Int? = null,
+        @field:NotNull(message = "Erro: O ano de graduação tem que estar preenchida")
+        @field:Min(value=1995, message = "Erro: O ano de graduação tem que ser >= 1995")
+        var gradYear: Int? = null,
 
         @field:NotEmpty(message = "Erro: é necessário um link para a imagem")
         var imgSrc: String? = null,

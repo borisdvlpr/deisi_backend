@@ -8,7 +8,7 @@
 <div class="container">
     <h1 class="page-header" th:if="${studentForm.studentId != null}">Eliminar aluno</h1>
 
-    <form th:object="${studentForm}" method="post" th:action="@{/students/delete}" class="form-horizontal">
+    <form th:object="${studentForm}" method="post" th:action="@{/backoffice/students/delete}" class="form-horizontal">
         <div class="form-group" th:classappend="${#fields.hasErrors('name')} ? 'has-error' : ''">
             <label for="name" class="col-sm-3 control-label">Nome</label>
             <div class="col-sm-9">
@@ -17,12 +17,12 @@
                 <p class="help-block" th:if="${!#fields.hasErrors('name')}">Nome do aluno</p>
             </div>
         </div>
-        <div class="form-group" th:classappend="${#fields.hasErrors('age')} ? 'has-error' : ''">
-            <label for="age" class="col-sm-3 control-label">Idade</label>
+        <div class="form-group" th:classappend="${#fields.hasErrors('gradYear')} ? 'has-error' : ''">
+            <label for="gradYear" class="col-sm-3 control-label">Ano Graduação</label>
             <div class="col-sm-9">
-                <input th:field="*{age}" type="text" class="form-control" id="age" maxlength="3" readonly="readonly"/>
-                <p class="help-block" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Error</p>
-                <p class="help-block" th:if="${!#fields.hasErrors('age')}">Idade do aluno</p>
+                <input th:field="*{gradYear}" type="text" class="form-control" id="gradYear" maxlength="4" readonly="readonly"/>
+                <p class="help-block" th:if="${#fields.hasErrors('gradYear')}" th:errors="*{gradYear}">Error</p>
+                <p class="help-block" th:if="${!#fields.hasErrors('gradYear')}">Ano de graduação</p>
             </div>
         </div>
         <div class="form-group" th:classappend="${#fields.hasErrors('imgSrc')} ? 'has-error' : ''">
@@ -36,7 +36,7 @@
         <div class="form-group" th:classappend="${#fields.hasErrors('description')} ? 'has-error' : ''">
             <label for="description" class="col-sm-3 control-label">Descrição</label>
             <div class="col-sm-9">
-                <input th:field="*{description}" type="text" class="form-control" id="description" maxlength="260" readonly="readonly"/>
+                <textarea th:field="*{description}" type="text" class="form-control" id="description" rows="6" maxlength="260" readonly="readonly" style="resize: none;"/></textarea>
                 <p class="help-block" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Error</p>
                 <p class="help-block" th:if="${!#fields.hasErrors('description')}">Descrição do aluno</p>
             </div>
@@ -49,6 +49,9 @@
                 <input name="studentId" type="hidden" th:value="*{studentId}" />
                 <input type="submit" value="Eliminar" class="btn btn-danger" />
             </div>
+            <div class="row-sm-9">&nbsp;</div>
+            <div class="row-sm-9">&nbsp;</div>
+            <div class="row-sm-9">&nbsp;</div>
         </div>
     </form>
 </div>

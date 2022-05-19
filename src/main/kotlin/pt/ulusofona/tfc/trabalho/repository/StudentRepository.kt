@@ -5,5 +5,5 @@ import pt.ulusofona.tfc.trabalho.dao.Student
 
 interface StudentRepository: JpaRepository<Student, Long> {
 
-    fun findByAge(age: Int): List<Student>
+    fun findByGradYear(gradYear: Int): List<Student>
 }

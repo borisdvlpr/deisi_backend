@@ -13,15 +13,15 @@ import javax.validation.Valid
 
 
 @RestController
-@RequestMapping("/students-api")
+@RequestMapping("/api/students")
 class StudentAPIController(val studentRepository: StudentRepository) {
 
     @GetMapping(value = ["/list"])
-    fun listStudents(@RequestParam("age") age: Int?): List<Student> {
-        val students = if (age == null) {
+    fun listStudents(@RequestParam("gradYear") gradYear: Int?): List<Student> {
+        val students = if (gradYear == null) {
             studentRepository.findAll()
         } else {
-            studentRepository.findByAge(age)
+            studentRepository.findByGradYear(gradYear)
         }
         return students
     }
@@ -36,11 +36,11 @@ class StudentAPIController(val studentRepository: StudentRepository) {
 
         val student: Student =
             if (studentForm.studentId.isNullOrBlank()) {  // new student
-                Student(name = studentForm.name!!, age = studentForm.age!!, imgSrc = studentForm.imgSrc!!, description = studentForm.description!!)
+                Student(name = studentForm.name!!, gradYear = studentForm.gradYear!!, imgSrc = studentForm.imgSrc!!, description = studentForm.description!!)
             } else { // edit student
                 val s = studentRepository.findById(studentForm.studentId!!.toLong()).get()
                 s.name = studentForm.name!!
-                s.age = studentForm.age!!
+                s.gradYear = studentForm.gradYear!!
                 s.imgSrc = studentForm.imgSrc!!
                 s.description = studentForm.description!!
                 s

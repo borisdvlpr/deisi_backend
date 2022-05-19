@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head (pageTitle='Nova página')">
+</head>
+<body>
+<div th:replace="layout/layout :: header"></div>
+
+<div class="container">
+    <h1 class="page-header" th:if="${pageForm.pageId == null}">Criar página</h1>
+    <h1 class="page-header" th:if="${pageForm.pageId != null}">Editar página</h1>
+
+    <form th:object="${pageForm}" method="post" th:action="@{/backoffice/pages/new}" class="form-horizontal">
+        <div class="form-group" th:classappend="${#fields.hasErrors('pageName')} ? 'has-error' : ''">
+            <label for="pageName" class="col-sm-3 control-label">Nome Página</label>
+            <div class="col-sm-9">
+                <input th:field="*{pageName}" type="text" class="form-control" id="pageName" maxlength="100"/>
+                <p class="help-block" th:if="${#fields.hasErrors('pageName')}" th:errors="*{pageName}">Error</p>
+                <p class="help-block" th:if="${!#fields.hasErrors('pageName')}">Nome da página</p>
+            </div>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('title')} ? 'has-error' : ''">
+            <label for="title" class="col-sm-3 control-label">Título</label>
+            <div class="col-sm-9">
+                <input th:field="*{title}" type="text" class="form-control" id="title" maxlength="100"/>
+                <p class="help-block" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Error</p>
+                <p class="help-block" th:if="${!#fields.hasErrors('title')}">Título do curso</p>
+            </div>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('stat')} ? 'has-error' : ''">
+            <label for="stat" class="col-sm-3 control-label">Estatística</label>
+            <div class="col-sm-9">
+                <input th:field="*{stat}" type="text" class="form-control" id="stat"/>
+                <p class="help-block" th:if="${#fields.hasErrors('stat')}" th:errors="*{stat}">Error</p>
+                <p class="help-block" th:if="${!#fields.hasErrors('stat')}">Estatística da página</p>
+            </div>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('statText')} ? 'has-error' : ''">
+            <label for="statText" class="col-sm-3 control-label">Texto Estatística</label>
+            <div class="col-sm-9">
+                <input th:field="*{statText}" type="text" class="form-control" id="statText"/>
+                <p class="help-block" th:if="${#fields.hasErrors('statText')}" th:errors="*{statText}">Error</p>
+                <p class="help-block" th:if="${!#fields.hasErrors('statText')}">Texto da estatística</p>
+            </div>
+        </div>
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('pageText')} ? 'has-error' : ''">
+            <label for="pageText" class="col-sm-3 control-label">Texto Página</label>
+            <div class="col-sm-9">
+                <textarea th:field="*{pageText}" class="form-control" id="pageText" rows="6" maxlength="500" style="resize: none;"></textarea>
+                <p class="help-block" th:if="${#fields.hasErrors('pageText')}" th:errors="*{pageText}">Error</p>
+                <p class="help-block" th:if="${!#fields.hasErrors('pageText')}">Texto da página</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3">
+                &nbsp;
+            </div>
+            <div class="col-sm-9">
+                <input name="pageId" type="hidden" th:value="*{pageId}" />
+                <input type="submit" value="Gravar" class="btn btn-primary" />
+            </div>
+            <div class="row-sm-9">&nbsp;</div>
+            <div class="row-sm-9">&nbsp;</div>
+            <div class="row-sm-9">&nbsp;</div>
+        </div>
+    </form>
+</div>
+
+<div th:replace="layout/layout :: footer"></div>
+</body>
+</html>

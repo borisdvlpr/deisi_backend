@@ -13,7 +13,7 @@ import javax.validation.Valid
 
 
 @RestController
-@RequestMapping("/companies-api")
+@RequestMapping("/api/companies")
 class CompanyAPIController(val companyRepository: CompanyRepository) {
 
     @GetMapping(value = ["/list"])

@@ -9,7 +9,7 @@
     <h1 class="page-header" th:if="${teacherForm.teacherId == null}">Criar professor</h1>
     <h1 class="page-header" th:if="${teacherForm.teacherId != null}">Editar professor</h1>
 
-    <form th:object="${teacherForm}" method="post" th:action="@{/teachers/new}" class="form-horizontal">
+    <form th:object="${teacherForm}" method="post" th:action="@{/backoffice/teachers/new}" class="form-horizontal">
         <div class="form-group" th:classappend="${#fields.hasErrors('name')} ? 'has-error' : ''">
             <label for="name" class="col-sm-3 control-label">Nome</label>
             <div class="col-sm-9">
@@ -37,7 +37,7 @@
         <div class="form-group" th:classappend="${#fields.hasErrors('description')} ? 'has-error' : ''">
             <label for="description" class="col-sm-3 control-label">Descrição</label>
             <div class="col-sm-9">
-                <input th:field="*{description}" type="text" class="form-control" id="description" maxlength="200"/>
+                <textarea th:field="*{description}" type="text" class="form-control" id="description" rows="6" maxlength="200" style="resize: none;"/></textarea>
                 <p class="help-block" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Error</p>
                 <p class="help-block" th:if="${!#fields.hasErrors('description')}">Descrição do professor</p>
             </div>
@@ -50,6 +50,9 @@
                 <input name="teacherId" type="hidden" th:value="*{teacherId}" />
                 <input type="submit" value="Gravar" class="btn btn-primary" />
             </div>
+            <div class="row-sm-9">&nbsp;</div>
+            <div class="row-sm-9">&nbsp;</div>
+            <div class="row-sm-9">&nbsp;</div>
         </div>
     </form>
 </div>

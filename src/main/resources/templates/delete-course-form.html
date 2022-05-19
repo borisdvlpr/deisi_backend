@@ -8,7 +8,7 @@
 <div class="container">
     <h1 class="page-header" th:if="${courseForm.courseId != null}">Eliminar curso</h1>
 
-    <form th:object="${courseForm}" method="post" th:action="@{/courses/delete}" class="form-horizontal">
+    <form th:object="${courseForm}" method="post" th:action="@{/backoffice/courses/delete}" class="form-horizontal">
         <div class="form-group" th:classappend="${#fields.hasErrors('title')} ? 'has-error' : ''">
             <label for="title" class="col-sm-3 control-label">Título</label>
             <div class="col-sm-9">

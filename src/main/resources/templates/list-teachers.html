@@ -13,7 +13,7 @@
         Message...
     </div>
     <h1>Listagem de professores</h1>
-    <form th:action="@{/teachers/list}" method="get">
+    <form th:action="@{/backoffice/teachers/list}" method="get">
         <label>Apenas professores com idade:</label>
         <input type="text" name="age" th:value="${age}" />
         <input type="submit" value="filtrar">
@@ -35,10 +35,10 @@
                 <td th:text="${teacher.imgSrc}" width="40%"></td>
                 <td th:text="${teacher.description}" width="35%"></td>
                 <td width="5%" align="center">
-                    <a th:href="@{'/teachers/edit/' + ${teacher.id}}">
+                    <a th:href="@{'/backoffice/teachers/edit/' + ${teacher.id}}">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     </a>
-                    <a th:href="@{'/teachers/delete/' + ${teacher.id}}">
+                    <a th:href="@{'/backoffice/teachers/delete/' + ${teacher.id}}">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                     </a>
                 </td>

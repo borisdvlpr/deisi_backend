@@ -13,7 +13,7 @@ import javax.validation.Valid
 
 
 @Controller
-@RequestMapping("/teachers")
+@RequestMapping("/backoffice/teachers")
 class TeacherController(val teacherRepository: TeacherRepository) {
 
     @GetMapping(value = ["/list"])
@@ -86,7 +86,7 @@ class TeacherController(val teacherRepository: TeacherRepository) {
         } else {
             redirectAttributes.addFlashAttribute("message", "Professor editado com sucesso")
         }
-        return "redirect:/teachers/list"
+        return "redirect:/backoffice/teachers/list"
     }
 
     @PostMapping(value = ["/delete"])
@@ -113,6 +113,6 @@ class TeacherController(val teacherRepository: TeacherRepository) {
         teacherRepository.delete(teacher)
         redirectAttributes.addFlashAttribute("message", "Professor eliminado com sucesso")
 
-        return "redirect:/teachers/list"
+        return "redirect:/backoffice/teachers/list"
     }
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="head (pageTitle)">
-    <title th:text="${pageTitle}">Trabalho</title>
+    <title th:text="${pageTitle}">DEISI Backoffice</title>
     <meta name="viewport" content="width=device-with, initial-scale=1.0"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
@@ -17,7 +17,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" th:href="@{/}"><span>Trabalho</span></a>
+            <a class="navbar-brand" th:href="@{/backoffice}"><span>Backoffice Deisi Website</span></a>
         </div>
 
         <div class="collapse navbar-collapse" id="drop-project-navbar-collapse-1">
@@ -29,13 +29,13 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a th:href="@{/pages/new}">Nova página</a>
+                            <a th:href="@{/backoffice/pages/new}">Nova página</a>
                         </li>
                         <li>
-                            <a th:href="@{/pages/list}">Listar páginas</a>
+                            <a th:href="@{/backoffice/pages/list}">Listar páginas</a>
                         </li>
                         <li>
-                            <a th:href="@{/pages-api/list}" target="_blank">API páginas</a>
+                            <a th:href="@{/api/pages/list}" target="_blank">API páginas</a>
                         </li>
                     </ul>
                 </li>
@@ -46,13 +46,13 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a th:href="@{/students/new}">Novo aluno</a>
+                            <a th:href="@{/backoffice/students/new}">Novo aluno</a>
                         </li>
                         <li>
-                            <a th:href="@{/students/list}">Listar alunos</a>
+                            <a th:href="@{/backoffice/students/list}">Listar alunos</a>
                         </li>
                         <li>
-                            <a th:href="@{/students-api/list}" target="_blank">API alunos</a>
+                            <a th:href="@{/api/students/list}" target="_blank">API alunos</a>
                         </li>
                     </ul>
                 </li>
@@ -64,13 +64,13 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a th:href="@{/teachers/new}">Novo professor</a>
+                            <a th:href="@{/backoffice/teachers/new}">Novo professor</a>
                         </li>
                         <li>
-                            <a th:href="@{/teachers/list}">Listar professores</a>
+                            <a th:href="@{/backoffice/teachers/list}">Listar professores</a>
                         </li>
                         <li>
-                            <a th:href="@{/teachers-api/list}" target="_blank">API professores</a>
+                            <a th:href="@{/api/teachers/list}" target="_blank">API professores</a>
                         </li>
                     </ul>
                 </li>
@@ -82,13 +82,13 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a th:href="@{/courses/new}">Novo curso</a>
+                            <a th:href="@{/backoffice/courses/new}">Novo curso</a>
                         </li>
                         <li>
-                            <a th:href="@{/courses/list}">Listar curso</a>
+                            <a th:href="@{/backoffice/courses/list}">Listar curso</a>
                         </li>
                         <li>
-                            <a th:href="@{/courses-api/list}" target="_blank">API cursos</a>
+                            <a th:href="@{/api/courses/list}" target="_blank">API cursos</a>
                         </li>
                     </ul>
                 </li>
@@ -99,13 +99,13 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a th:href="@{/companies/new}">Nova empresa</a>
+                            <a th:href="@{/backoffice/companies/new}">Nova empresa</a>
                         </li>
                         <li>
-                            <a th:href="@{/companies/list}">Listar empresas</a>
+                            <a th:href="@{/backoffice/companies/list}">Listar empresas</a>
                         </li>
                         <li>
-                            <a th:href="@{/companies-api/list}" target="_blank">API empresas</a>
+                            <a th:href="@{/api/companies/list}" target="_blank">API empresas</a>
                         </li>
                     </ul>
                 </li>

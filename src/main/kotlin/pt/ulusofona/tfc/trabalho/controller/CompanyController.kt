@@ -13,7 +13,7 @@ import javax.validation.Valid
 
 
 @Controller
-@RequestMapping("/companies")
+@RequestMapping("/backoffice/companies")
 class CompanyController(val companyRepository: CompanyRepository) {
 
     @GetMapping(value = ["/list"])
@@ -85,7 +85,7 @@ class CompanyController(val companyRepository: CompanyRepository) {
         } else {
             redirectAttributes.addFlashAttribute("message", "Empresa editada com sucesso")
         }
-        return "redirect:/companies/list"
+        return "redirect:/backoffice/companies/list"
     }
 
     @PostMapping(value = ["/delete"])
@@ -111,6 +111,6 @@ class CompanyController(val companyRepository: CompanyRepository) {
         companyRepository.delete(company)
         redirectAttributes.addFlashAttribute("message", "Empresa eliminada com sucesso")
 
-        return "redirect:/companies/list"
+        return "redirect:/backoffice/companies/list"
     }
 }

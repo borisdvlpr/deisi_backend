@@ -13,16 +13,16 @@ import javax.validation.Valid
 
 
 @Controller
-@RequestMapping("/students")
+@RequestMapping("/backoffice/students")
 class StudentController(val studentRepository: StudentRepository) {
 
     @GetMapping(value = ["/list"])
-    fun listStudents(@RequestParam("age") age: Int?, model: ModelMap, principal: Principal?): String {
-        val students = if (age == null) {
+    fun listStudents(@RequestParam("gradYear") gradYear: Int?, model: ModelMap, principal: Principal?): String {
+        val students = if (gradYear == null) {
             studentRepository.findAll()  // get all students from DB
         } else {
-            model["age"] = age
-            studentRepository.findByAge(age)
+            model["gradYear"] = gradYear
+            studentRepository.findByGradYear(gradYear)
         }
         model["students"] = students
 
@@ -40,7 +40,7 @@ class StudentController(val studentRepository: StudentRepository) {
         val studentOptional = studentRepository.findById(id)
         if (studentOptional.isPresent) {
             val student = studentOptional.get()
-            model["studentForm"] = StudentForm(studentId = student.id.toString(), name = student.name, age = student.age, imgSrc = student.imgSrc, description = student.description)
+            model["studentForm"] = StudentForm(studentId = student.id.toString(), name = student.name, gradYear = student.gradYear, imgSrc = student.imgSrc, description = student.description)
         }
 
         return "new-student-form"
@@ -51,7 +51,7 @@ class StudentController(val studentRepository: StudentRepository) {
         val studentOptional = studentRepository.findById(id)
         if (studentOptional.isPresent) {
             val student = studentOptional.get()
-            model["studentForm"] = StudentForm(studentId = student.id.toString(), name = student.name, age = student.age, imgSrc = student.imgSrc, description = student.description)
+            model["studentForm"] = StudentForm(studentId = student.id.toString(), name = student.name, gradYear = student.gradYear, imgSrc = student.imgSrc, description = student.description)
         }
 
         return "delete-student-form"
@@ -69,11 +69,11 @@ class StudentController(val studentRepository: StudentRepository) {
 
         val student: Student =
             if (studentForm.studentId.isNullOrBlank()) {
-                Student(name = studentForm.name!!, age = studentForm.age!!, imgSrc = studentForm.imgSrc!!, description = studentForm.description!!)
+                Student(name = studentForm.name!!, gradYear = studentForm.gradYear!!, imgSrc = studentForm.imgSrc!!, description = studentForm.description!!)
             } else {
                 val s = studentRepository.findById(studentForm.studentId!!.toLong()).get()
                 s.name = studentForm.name!!
-                s.age = studentForm.age!!
+                s.gradYear = studentForm.gradYear!!
                 s.imgSrc = studentForm.imgSrc!!
                 s.description = studentForm.description!!
                 s
@@ -86,7 +86,7 @@ class StudentController(val studentRepository: StudentRepository) {
         } else {
             redirectAttributes.addFlashAttribute("message", "Aluno editado com sucesso")
         }
-        return "redirect:/students/list"
+        return "redirect:/backoffice/students/list"
     }
 
     @PostMapping(value = ["/delete"])
@@ -100,11 +100,11 @@ class StudentController(val studentRepository: StudentRepository) {
 
         val student: Student =
             if (studentForm.studentId.isNullOrBlank()) {
-                Student(name = studentForm.name!!, age = studentForm.age!!, imgSrc = studentForm.imgSrc!!, description = studentForm.description!!)
+                Student(name = studentForm.name!!, gradYear = studentForm.gradYear!!, imgSrc = studentForm.imgSrc!!, description = studentForm.description!!)
             } else {
                 val s = studentRepository.findById(studentForm.studentId!!.toLong()).get()
                 s.name = studentForm.name!!
-                s.age = studentForm.age!!
+                s.gradYear = studentForm.gradYear!!
                 s.imgSrc = studentForm.imgSrc!!
                 s.description = studentForm.description!!
                 s
@@ -113,6 +113,6 @@ class StudentController(val studentRepository: StudentRepository) {
         studentRepository.delete(student)
         redirectAttributes.addFlashAttribute("message", "Aluno eliminado com sucesso")
 
-        return "redirect:/students/list"
+        return "redirect:/backoffice/students/list"
     }
 }
