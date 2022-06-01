@@ -26,12 +26,12 @@
                 <p class="help-block" th:if="${!#fields.hasErrors('gradYear')}">Ano de graduação</p>
             </div>
         </div>
-        <div class="form-group" th:classappend="${#fields.hasErrors('imgSrc')} ? 'has-error' : ''">
-            <label for="imgSrc" class="col-sm-3 control-label">Link Imagem</label>
+        <div class="form-group" th:classappend="${#fields.hasErrors('imgFile')} ? 'has-error' : ''">
+            <label for="imgFile" class="col-sm-3 control-label">Link Imagem</label>
             <div class="col-sm-9">
-                <input th:field="*{imgSrc}" type="text" class="form-control" id="imgSrc" maxlength="150"/>
-                <p class="help-block" th:if="${#fields.hasErrors('imgSrc')}" th:errors="*{imgSrc}">Error</p>
-                <p class="help-block" th:if="${!#fields.hasErrors('imgSrc')}">Imagem do aluno</p>
+                <input th:field="*{imgFile}" type="file" class="form-control" id="imgFile" maxlength="150"/>
+                <p class="help-block" th:if="${#fields.hasErrors('imgFile')}" th:errors="*{imgFile}">Error</p>
+                <p class="help-block" th:if="${!#fields.hasErrors('imgFile')}">Imagem do aluno</p>
             </div>
         </div>
         <div class="form-group" th:classappend="${#fields.hasErrors('description')} ? 'has-error' : ''">

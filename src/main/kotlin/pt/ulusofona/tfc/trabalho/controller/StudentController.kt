@@ -8,6 +8,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import pt.ulusofona.tfc.trabalho.dao.Student
 import pt.ulusofona.tfc.trabalho.form.StudentForm
 import pt.ulusofona.tfc.trabalho.repository.StudentRepository
+import io.imagekit.sdk.ImageKit
+import io.imagekit.sdk.models.FileCreateRequest
+import org.springframework.web.multipart.MultipartFile
+import java.io.File
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
 import java.security.Principal
 import javax.validation.Valid
 
@@ -64,7 +71,33 @@ class StudentController(val studentRepository: StudentRepository) {
     ) : String {
 
         if (bindingResult.hasErrors()) {
+            println(bindingResult)
             return "new-student-form"
+        }
+
+        if(studentForm.studentId.isNullOrBlank()) {
+            try {
+                val newFile = studentForm.imgFile
+                println("$newFile - new file")
+                newFile?.copyTo(File("../tmp/${newFile.name}"))
+                val filePath: String? = newFile?.absolutePath
+
+                // para testar a submissão no imagekit:
+                //      - comentar as linhas anteriores
+                //      - na criação da variável path abaixo, por a path do ficheiro onde se encontra a variável $filePath
+                //      - na criação da variável fileCreateRequest, por o nome do ficheiro onde se encontra a variável newFile?.name
+                //
+                // na classe StudentForm foi retirada a obrigatoriedade de preencher o campo imgSrc
+
+                val bytes = Files.readAllBytes(Paths.get("$filePath"))
+                val fileCreateRequest = FileCreateRequest(bytes, newFile?.name)
+                fileCreateRequest.isUseUniqueFileName = false
+                val result = ImageKit.getInstance().upload(fileCreateRequest)
+                studentForm.imgSrc = result.url
+
+            } catch (err: Error) {
+                redirectAttributes.addFlashAttribute("message", "Erro submissão foto aluno: $err")
+            }
         }
 
         val student: Student =
