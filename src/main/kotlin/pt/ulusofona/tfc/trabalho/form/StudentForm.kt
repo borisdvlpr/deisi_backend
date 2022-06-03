@@ -17,7 +17,7 @@ data class StudentForm (
         @field:Min(value=1995, message = "Erro: O ano de graduação tem que ser >= 1995")
         var gradYear: Int? = null,
 
-        var imgFile: File? = null,
+        // var imgFile: File? = null,
         var imgSrc: String? = null,
 
         @field:NotEmpty(message = "Erro: a descrição tem que ser preenchida")

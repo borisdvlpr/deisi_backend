@@ -13,7 +13,6 @@ import io.imagekit.sdk.models.FileCreateRequest
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
 import java.nio.file.Files
-import java.nio.file.Path
 import java.nio.file.Paths
 import java.security.Principal
 import javax.validation.Valid
@@ -66,8 +65,9 @@ class StudentController(val studentRepository: StudentRepository) {
 
     @PostMapping(value = ["/new"])
     fun createOrUpdateStudent(@Valid @ModelAttribute("studentForm") studentForm: StudentForm,
-                           bindingResult: BindingResult,
-                           redirectAttributes: RedirectAttributes
+                               @RequestParam("imgFile") file: MultipartFile,
+                               bindingResult: BindingResult,
+                               redirectAttributes: RedirectAttributes
     ) : String {
 
         if (bindingResult.hasErrors()) {
@@ -77,31 +77,24 @@ class StudentController(val studentRepository: StudentRepository) {
 
         if(studentForm.studentId.isNullOrBlank()) {
             try {
-                val newFile = studentForm.imgFile
-                println("$newFile - new file")
-                newFile?.copyTo(File("../tmp/${newFile.name}"))
-                val filePath: String? = newFile?.absolutePath
-
-                // para testar a submissão no imagekit:
-                //      - comentar as linhas anteriores
-                //      - na criação da variável path abaixo, por a path do ficheiro onde se encontra a variável $filePath
-                //      - na criação da variável fileCreateRequest, por o nome do ficheiro onde se encontra a variável newFile?.name
-                //
-                // na classe StudentForm foi retirada a obrigatoriedade de preencher o campo imgSrc
-
-                val bytes = Files.readAllBytes(Paths.get("$filePath"))
-                val fileCreateRequest = FileCreateRequest(bytes, newFile?.name)
+                val fileName: String? = file.originalFilename
+                val newImage = File("/Users/__boris/Desktop/Computer_Science/deisi_website/website/deisi_backend/src/main/kotlin/pt/ulusofona/tfc/trabalho/tmp/$fileName")
+                file.transferTo(newImage)
+                val bytes = Files.readAllBytes(Paths.get(newImage.path))
+                val fileCreateRequest = FileCreateRequest(bytes, fileName)
                 fileCreateRequest.isUseUniqueFileName = false
                 val result = ImageKit.getInstance().upload(fileCreateRequest)
                 studentForm.imgSrc = result.url
 
-            } catch (err: Error) {
+                newImage.delete()
+
+            } catch (err: Exception) {
                 redirectAttributes.addFlashAttribute("message", "Erro submissão foto aluno: $err")
             }
         }
 
         val student: Student =
-            if (studentForm.studentId.isNullOrBlank()) {
+            if (studentForm.studentId.isNullOrBlank() && studentForm.imgSrc != null) {
                 Student(name = studentForm.name!!, gradYear = studentForm.gradYear!!, imgSrc = studentForm.imgSrc!!, description = studentForm.description!!)
             } else {
                 val s = studentRepository.findById(studentForm.studentId!!.toLong()).get()
@@ -119,6 +112,7 @@ class StudentController(val studentRepository: StudentRepository) {
         } else {
             redirectAttributes.addFlashAttribute("message", "Aluno editado com sucesso")
         }
+
         return "redirect:/backoffice/students/list"
     }
 
