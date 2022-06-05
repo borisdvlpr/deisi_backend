@@ -1,5 +1,7 @@
 package pt.ulusofona.tfc.trabalho.controller
 
+import io.imagekit.sdk.ImageKit
+import io.imagekit.sdk.models.FileCreateRequest
 import org.springframework.stereotype.Controller
 import org.springframework.ui.ModelMap
 import org.springframework.validation.BindingResult
@@ -8,8 +10,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import pt.ulusofona.tfc.trabalho.dao.Student
 import pt.ulusofona.tfc.trabalho.form.StudentForm
 import pt.ulusofona.tfc.trabalho.repository.StudentRepository
-import io.imagekit.sdk.ImageKit
-import io.imagekit.sdk.models.FileCreateRequest
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
 import java.nio.file.Files
@@ -71,36 +71,31 @@ class StudentController(val studentRepository: StudentRepository) {
     ) : String {
 
         if (bindingResult.hasErrors()) {
-            println(bindingResult)
             return "new-student-form"
         }
 
-        if(studentForm.studentId.isNullOrBlank()) {
+        if(studentForm.studentId.isNullOrBlank() || !file.isEmpty) {
             try {
-                val fileName: String? = file.originalFilename
-                val newImage = File("/Users/__boris/Desktop/Computer_Science/deisi_website/website/deisi_backend/src/main/kotlin/pt/ulusofona/tfc/trabalho/tmp/$fileName")
-                file.transferTo(newImage)
-                val bytes = Files.readAllBytes(Paths.get(newImage.path))
-                val fileCreateRequest = FileCreateRequest(bytes, fileName)
-                fileCreateRequest.isUseUniqueFileName = false
-                val result = ImageKit.getInstance().upload(fileCreateRequest)
-                studentForm.imgSrc = result.url
-
-                newImage.delete()
+                uploadImageCDN(studentForm, file)
 
             } catch (err: Exception) {
                 redirectAttributes.addFlashAttribute("message", "Erro submissão foto aluno: $err")
+                return "redirect:/backoffice/students/list"
             }
         }
 
         val student: Student =
-            if (studentForm.studentId.isNullOrBlank() && studentForm.imgSrc != null) {
+            if (studentForm.studentId.isNullOrBlank()) {
                 Student(name = studentForm.name!!, gradYear = studentForm.gradYear!!, imgSrc = studentForm.imgSrc!!, description = studentForm.description!!)
             } else {
+                val newSrc: String;
                 val s = studentRepository.findById(studentForm.studentId!!.toLong()).get()
+
+                newSrc = if(!studentForm.imgSrc.equals(null)) { studentForm.imgSrc.toString(); } else { s.imgSrc }
+
                 s.name = studentForm.name!!
                 s.gradYear = studentForm.gradYear!!
-                s.imgSrc = studentForm.imgSrc!!
+                s.imgSrc = newSrc
                 s.description = studentForm.description!!
                 s
             }
@@ -141,5 +136,20 @@ class StudentController(val studentRepository: StudentRepository) {
         redirectAttributes.addFlashAttribute("message", "Aluno eliminado com sucesso")
 
         return "redirect:/backoffice/students/list"
+    }
+
+    fun uploadImageCDN(studentForm: StudentForm, file: MultipartFile) {
+        val rootPath = Paths.get("").toAbsolutePath().toString()
+        val fileName: String? = file.originalFilename
+        val newImage = File("$rootPath/src/main/kotlin/pt/ulusofona/tfc/trabalho/tmp/$fileName")
+        file.transferTo(newImage)
+
+        val bytes = Files.readAllBytes(Paths.get(newImage.path))
+        val fileCreateRequest = FileCreateRequest(bytes, fileName)
+        fileCreateRequest.isUseUniqueFileName = false
+        val result = ImageKit.getInstance().upload(fileCreateRequest)
+
+        studentForm.imgSrc = result.url
+        newImage.delete()
     }
 }

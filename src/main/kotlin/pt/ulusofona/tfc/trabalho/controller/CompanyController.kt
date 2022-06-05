@@ -1,5 +1,7 @@
 package pt.ulusofona.tfc.trabalho.controller
 
+import io.imagekit.sdk.ImageKit
+import io.imagekit.sdk.models.FileCreateRequest
 import org.springframework.stereotype.Controller
 import org.springframework.ui.ModelMap
 import org.springframework.validation.BindingResult
@@ -8,6 +10,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import pt.ulusofona.tfc.trabalho.dao.Company
 import pt.ulusofona.tfc.trabalho.form.CompanyForm
 import pt.ulusofona.tfc.trabalho.repository.CompanyRepository
+import org.springframework.web.multipart.MultipartFile
+import java.io.File
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.security.Principal
 import javax.validation.Valid
 
@@ -59,21 +65,36 @@ class CompanyController(val companyRepository: CompanyRepository) {
 
     @PostMapping(value = ["/new"])
     fun createOrUpdateCompany(@Valid @ModelAttribute("companyForm") companyForm: CompanyForm,
-                           bindingResult: BindingResult,
-                           redirectAttributes: RedirectAttributes
+                                  @RequestParam("imgFile") file: MultipartFile,
+                                  bindingResult: BindingResult,
+                                  redirectAttributes: RedirectAttributes
     ) : String {
 
         if (bindingResult.hasErrors()) {
             return "new-company-form"
         }
 
+        if(companyForm.companyId.isNullOrBlank() || !file.isEmpty) {
+            try {
+                uploadImageCDN(companyForm, file)
+
+            } catch (err: Exception) {
+                redirectAttributes.addFlashAttribute("message", "Erro submissão foto empresa: $err")
+                return "redirect:/backoffice/companies/list"
+            }
+        }
+
         val company: Company =
             if (companyForm.companyId.isNullOrBlank()) {
                 Company(name = companyForm.name!!, imgSrc = companyForm.imgSrc!!, description = companyForm.description!!)
             } else {
+                val newSrc: String;
                 val cm = companyRepository.findById(companyForm.companyId!!.toLong()).get()
+
+                newSrc = if(!companyForm.imgSrc.equals(null)) { companyForm.imgSrc.toString(); } else { cm.imgSrc }
+
                 cm.name = companyForm.name!!
-                cm.imgSrc = companyForm.imgSrc!!
+                cm.imgSrc = newSrc
                 cm.description = companyForm.description!!
                 cm
             }
@@ -112,5 +133,20 @@ class CompanyController(val companyRepository: CompanyRepository) {
         redirectAttributes.addFlashAttribute("message", "Empresa eliminada com sucesso")
 
         return "redirect:/backoffice/companies/list"
+    }
+
+    fun uploadImageCDN(companyForm: CompanyForm, file: MultipartFile) {
+        val rootPath = Paths.get("").toAbsolutePath().toString()
+        val fileName: String? = file.originalFilename
+        val newImage = File("$rootPath/src/main/kotlin/pt/ulusofona/tfc/trabalho/tmp/$fileName")
+        file.transferTo(newImage)
+
+        val bytes = Files.readAllBytes(Paths.get(newImage.path))
+        val fileCreateRequest = FileCreateRequest(bytes, fileName)
+        fileCreateRequest.isUseUniqueFileName = false
+        val result = ImageKit.getInstance().upload(fileCreateRequest)
+
+        companyForm.imgSrc = result.url
+        newImage.delete()
     }
 }

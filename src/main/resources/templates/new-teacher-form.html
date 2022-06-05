@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head th:replace="layout/layout :: head (pageTitle='Novo professor')">
 </head>
 <body>
 <div th:replace="layout/layout :: header"></div>
 
 <div class="container">
-    <h1 class="page-header" th:if="${teacherForm.teacherId == null}">Criar professor</h1>
-    <h1 class="page-header" th:if="${teacherForm.teacherId != null}">Editar professor</h1>
+    <h1 class="page-header" th:if="${teacherForm?.teacherId == null}">Criar professor</h1>
+    <h1 class="page-header" th:if="${teacherForm?.teacherId != null}">Editar professor</h1>
 
-    <form th:object="${teacherForm}" method="post" th:action="@{/backoffice/teachers/new}" class="form-horizontal">
+    <form th:object="${teacherForm}" method="post" th:action="@{/backoffice/teachers/new}" class="form-horizontal" enctype="multipart/form-data">
         <div class="form-group" th:classappend="${#fields.hasErrors('name')} ? 'has-error' : ''">
             <label for="name" class="col-sm-3 control-label">Nome</label>
             <div class="col-sm-9">
@@ -26,12 +26,10 @@
                 <p class="help-block" th:if="${!#fields.hasErrors('age')}">Idade do professor</p>
             </div>
         </div>
-        <div class="form-group" th:classappend="${#fields.hasErrors('imgSrc')} ? 'has-error' : ''">
-            <label for="imgSrc" class="col-sm-3 control-label">Link Imagem</label>
+        <div class="form-group">
+            <label for="imgFile" class="col-sm-3 control-label">Link Imagem</label>
             <div class="col-sm-9">
-                <input th:field="*{imgSrc}" type="text" class="form-control" id="imgSrc" maxlength="150"/>
-                <p class="help-block" th:if="${#fields.hasErrors('imgSrc')}" th:errors="*{imgSrc}">Error</p>
-                <p class="help-block" th:if="${!#fields.hasErrors('imgSrc')}">Imagem do professor</p>
+                <input name="imgFile" type="file" class="form-control" id="imgFile" maxlength="150" accept=".jpg,.jpeg,.heic,.png"/>
             </div>
         </div>
         <div class="form-group" th:classappend="${#fields.hasErrors('description')} ? 'has-error' : ''">

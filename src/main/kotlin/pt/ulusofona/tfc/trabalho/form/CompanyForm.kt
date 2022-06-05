@@ -10,7 +10,6 @@ data class CompanyForm (
         @field:NotEmpty(message = "Erro: O nome tem que estar preenchido")
         var name: String? = null,
 
-        @field:NotEmpty(message = "Erro: é necessário um link para a imagem")
         var imgSrc: String? = null,
 
         @field:NotEmpty(message = "Erro: a descrição tem que ser preenchida")

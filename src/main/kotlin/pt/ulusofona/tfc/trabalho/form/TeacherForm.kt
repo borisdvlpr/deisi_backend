@@ -16,7 +16,6 @@ data class TeacherForm (
         @field:Min(value=18, message = "Erro: A idade tem que ser >= 18")
         var age: Int? = null,
 
-        @field:NotEmpty(message = "Erro: é necessário um link para a imagem")
         var imgSrc: String? = null,
 
         @field:NotEmpty(message = "Erro: a descrição tem que ser preenchida")

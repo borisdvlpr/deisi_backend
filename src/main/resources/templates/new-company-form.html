@@ -6,10 +6,10 @@
 <div th:replace="layout/layout :: header"></div>
 
 <div class="container">
-    <h1 class="page-header" th:if="${companyForm.companyId == null}">Criar empresa</h1>
-    <h1 class="page-header" th:if="${companyForm.companyId != null}">Editar empresa</h1>
+    <h1 class="page-header" th:if="${companyForm?.companyId == null}">Criar empresa</h1>
+    <h1 class="page-header" th:if="${companyForm?.companyId != null}">Editar empresa</h1>
 
-    <form th:object="${companyForm}" method="post" th:action="@{/backoffice/companies/new}" class="form-horizontal">
+    <form th:object="${companyForm}" method="post" th:action="@{/backoffice/companies/new}" class="form-horizontal" enctype="multipart/form-data">
         <div class="form-group" th:classappend="${#fields.hasErrors('name')} ? 'has-error' : ''">
             <label for="name" class="col-sm-3 control-label">Nome</label>
             <div class="col-sm-9">
@@ -18,12 +18,10 @@
                 <p class="help-block" th:if="${!#fields.hasErrors('name')}">Nome da empresa</p>
             </div>
         </div>
-        <div class="form-group" th:classappend="${#fields.hasErrors('imgSrc')} ? 'has-error' : ''">
-            <label for="imgSrc" class="col-sm-3 control-label">Link Imagem</label>
+        <div class="form-group">
+            <label for="imgFile" class="col-sm-3 control-label">Link Imagem</label>
             <div class="col-sm-9">
-                <input th:field="*{imgSrc}" type="text" class="form-control" id="imgSrc" maxlength="150"/>
-                <p class="help-block" th:if="${#fields.hasErrors('imgSrc')}" th:errors="*{imgSrc}">Error</p>
-                <p class="help-block" th:if="${!#fields.hasErrors('imgSrc')}">Imagem da empresa</p>
+                <input name="imgFile" type="file" class="form-control" id="imgFile" maxlength="150" accept=".jpg,.jpeg,.heic,.png"/>
             </div>
         </div>
         <div class="form-group" th:classappend="${#fields.hasErrors('description')} ? 'has-error' : ''">
