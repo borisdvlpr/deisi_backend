@@ -8,10 +8,10 @@
         <version>2.5.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>pt.ulusofona.tfc</groupId>
-    <artifactId>trabalho</artifactId>
+    <groupId>pt.ulusofona.deisi</groupId>
+    <artifactId>landing-page</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>trabalho</name>
+    <name>landing-page</name>
     <description>Demo app web em Spring Boot</description>
     <repositories>
         <repository>
