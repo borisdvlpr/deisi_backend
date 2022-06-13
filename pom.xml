@@ -11,6 +11,7 @@
     <groupId>pt.ulusofona.deisi</groupId>
     <artifactId>landing-page</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
     <name>landing-page</name>
     <description>Demo app web em Spring Boot</description>
     <repositories>
@@ -117,6 +118,7 @@
     </dependencies>
 
     <build>
+        <finalName>landing-page</finalName>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
         <plugins>

@@ -1,14 +1,15 @@
 package pt.ulusofona.deisi.landingPage;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import io.imagekit.sdk.ImageKit;
-import io.imagekit.sdk.utils.Utils;
+import io.imagekit.sdk.ImageKit
+import io.imagekit.sdk.utils.Utils
+import org.springframework.boot.SpringApplication
+import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
+import org.springframework.context.annotation.PropertySource
 
 @SpringBootApplication
+@PropertySource("classpath:landing-page.properties")
 class DEISILandingPageApplication : SpringBootServletInitializer() {
 
     override fun configure(application: SpringApplicationBuilder): SpringApplicationBuilder {
