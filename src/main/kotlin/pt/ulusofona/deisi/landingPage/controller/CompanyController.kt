@@ -136,9 +136,10 @@ class CompanyController(val companyRepository: CompanyRepository) {
     }
 
     fun uploadImageCDN(companyForm: CompanyForm, file: MultipartFile) {
-        val rootPath = Paths.get("").toAbsolutePath().toString()
-        val fileName: String? = file.originalFilename
-        val newImage = File("$rootPath/src/main/kotlin/pt/ulusofona/tfc/trabalho/tmp/$fileName")
+        val fileName: String = file.originalFilename ?: "temp"
+        val tempDir = Files.createTempDirectory("landing-page-uploads").toFile()
+
+        val newImage = File(tempDir, fileName)
         file.transferTo(newImage)
 
         val bytes = Files.readAllBytes(Paths.get(newImage.path))
